@@ -5,12 +5,13 @@ import useAuth from "../../hooks/useAuth";
 import * as C from "./styles";
 
 const Home = () => {
-  const { signout } = useAuth();
+  const { signout, user } = useAuth();
   const navigate = useNavigate();
+  console.log('useAuth: ', user);
 
   return (
     <C.Container>
-      <C.Title>Home</C.Title>
+      <C.Title>Bem vindo: {user.nome}</C.Title>
       <Button Text="Sair" onClick={() => [signout(), navigate("/")]}>
         Sair
       </Button>

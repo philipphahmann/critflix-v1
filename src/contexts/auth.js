@@ -22,13 +22,13 @@ export const AuthProvider = ({ children }) => {
         const usersStorage = JSON.parse(localStorage.getItem('users_bd'));
         
         const hasUser = usersStorage?.filter((user) => user.email === email);
-        console.log('hasUser: ', hasUser);
 
         if(hasUser?.length){
             if(hasUser[0].email === email && hasUser[0].password === password) {
                 const token = Math.random().toString(36).substring(2);
-                localStorage.setItem('user_token', JSON.stringify({ email, token}))
-                setUser({ email, password });
+                const nome = hasUser[0].nome;
+                localStorage.setItem('user_token', JSON.stringify({ nome, email, token}))
+                setUser({ nome, email, password });
                 return;
             } else {
                 return 'E-mail ou senha incorretos';
@@ -38,18 +38,18 @@ export const AuthProvider = ({ children }) => {
         }
     };
 
-    const signup = (email, password) => {
+    const signup = (nome, email, password) => {
         const usersStorage = JSON.parse(localStorage.getItem('users_bd'));
-        const hasUser = usersStorage?.filter((user) => user.email === email);
+        const hasUser = usersStorage?.filter((user) => user.email === email).nome;
 
         if(hasUser?.lenght){ return 'Já existe uma conta com esse e-mail'; }
 
         let newUser;
 
         if(usersStorage){
-            newUser = [...usersStorage, { email, password }];
+            newUser = [...usersStorage, { nome, email, password }];
         } else {
-            newUser = [{ email, password }];
+            newUser = [{ nome, email, password }];
         }
 
         localStorage.setItem('users_bd', JSON.stringify(newUser));

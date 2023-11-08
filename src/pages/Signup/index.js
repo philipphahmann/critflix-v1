@@ -6,16 +6,17 @@ import { Link, useNavigate } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 
 const Signup = () => {
-  const [email, setEmail] = useState("");
-  const [emailConf, setEmailConf] = useState("");
-  const [senha, setSenha] = useState("");
-  const [error, setError] = useState("");
+  const [nome, setNome] = useState('');
+  const [email, setEmail] = useState('');
+  const [emailConf, setEmailConf] = useState('');
+  const [senha, setSenha] = useState('');
+  const [error, setError] = useState('');
   const navigate = useNavigate();
 
   const { signup } = useAuth();
 
   const handleSignup = () => {
-    if (!email | !emailConf | !senha) {
+    if (!nome | !email | !emailConf | !senha) {
       setError("Preencha todos os campos");
       return;
     } else if (email !== emailConf) {
@@ -23,7 +24,7 @@ const Signup = () => {
       return;
     }
 
-    const res = signup(email, senha);
+    const res = signup(nome, email, senha);
 
     if (res) {
       setError(res);
@@ -39,22 +40,28 @@ const Signup = () => {
       <C.Label>SISTEMA DE LOGIN</C.Label>
       <C.Content>
         <Input
-          type="email"
-          placeholder="Digite seu E-mail"
-          value={email}
-          onChange={(e) => [setEmail(e.target.value), setError("")]}
+          type="text"
+          placeholder="Digite seu nome"
+          value={nome}
+          onChange={(e) => [setNome(e.target.value), setError('')]}
         />
         <Input
           type="email"
-          placeholder="Confirme seu E-mail"
+          placeholder="Digite seu e-mail"
+          value={email}
+          onChange={(e) => [setEmail(e.target.value), setError('')]}
+        />
+        <Input
+          type="email"
+          placeholder="Confirme seu e-mail"
           value={emailConf}
-          onChange={(e) => [setEmailConf(e.target.value), setError("")]}
+          onChange={(e) => [setEmailConf(e.target.value), setError('')]}
         />
         <Input
           type="password"
-          placeholder="Digite sua Senha"
+          placeholder="Digite sua senha"
           value={senha}
-          onChange={(e) => [setSenha(e.target.value), setError("")]}
+          onChange={(e) => [setSenha(e.target.value), setError('')]}
         />
         <C.labelError>{error}</C.labelError>
         <Button Text="Inscrever-se" onClick={handleSignup} />
